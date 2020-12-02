@@ -20,12 +20,12 @@ def get_all_tasks(request):
         tasks = Task.objects.all()
         serializer = Serializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)
-'''
-    elif request.method == 'POST':
+
+def post_task(request):    
+    if request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = Serializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
-'''
