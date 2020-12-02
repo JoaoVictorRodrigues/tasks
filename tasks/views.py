@@ -29,3 +29,17 @@ def post_task(request):
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
+'''
+def put_task(request):    
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = Serializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+'''
+def delete_tasks(request):    
+    if request.method == 'POST':
+        task = Task.objects.all().delete()
+        return JsonResponse({"status": 200, "message": "Tasks deleted"}, status=200)
