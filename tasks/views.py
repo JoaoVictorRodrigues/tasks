@@ -40,6 +40,6 @@ def put_task(request):
         return JsonResponse(serializer.errors, status=400)
 '''
 def delete_tasks(request):    
-    if request.method == 'POST':
+    if request.method == 'DELETE':
         task = Task.objects.all().delete()
         return JsonResponse({"status": 200, "message": "Tasks deleted"}, status=200)
