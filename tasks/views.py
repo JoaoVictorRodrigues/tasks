@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view
 from tasks.models import Task
 from tasks.serializer import Serializer
 
@@ -11,7 +12,7 @@ from tasks.serializer import Serializer
 def index(request):
     return HttpResponse("Hello, world. You're at the tasks index.")
 
-@csrf_exempt
+@api_view(["GET"])
 def get_all_tasks(request):
     """
     List all code snippets, or create a new snippet.
@@ -21,6 +22,7 @@ def get_all_tasks(request):
         serializer = Serializer(tasks, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+@api_view(["POST"])
 def post_task(request):    
     if request.method == 'POST':
         data = JSONParser().parse(request)
@@ -39,6 +41,7 @@ def put_task(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 '''
+@api_view(["DELETE"])
 def delete_tasks(request):    
     if request.method == 'DELETE':
         task = Task.objects.all().delete()
